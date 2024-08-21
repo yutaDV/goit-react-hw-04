@@ -1,9 +1,11 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Modal from 'react-modal';
 import SearchBar from './components/SearchBar/SearchBar';
 import ImageGallery from './components/ImageGallery/ImageGallery';
-import ImageModal from './components/ImageModal/ImageModal';
 import { fetchImages } from './services/api'; 
+
+Modal.setAppElement('#root'); // Adjust the selector if needed
 
 const App = () => {
   const [images, setImages] = useState([]);
@@ -13,6 +15,7 @@ const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState(''); 
+
   const handleSearch = async (newQuery) => {
     setIsLoading(true);
     setError(null);
@@ -64,12 +67,29 @@ const App = () => {
         isLoading={isLoading}
         error={error}
         onLoadMore={handleLoadMore}
+        onImageClick={openModal} // Pass the function to ImageGallery
       />
-      <ImageModal
+       <Modal
         isOpen={isModalOpen}
         onRequestClose={closeModal}
-        image={modalImage}
-      />
+        style={{
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          },
+          content: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 0,
+            border: 'none',
+            background: 'transparent',
+          }
+        }}
+      >
+        {modalImage && (
+          <img src={modalImage.urls.regular} alt={modalImage.alt_description} />
+        )}
+      </Modal>
     </div>
   );
 };
