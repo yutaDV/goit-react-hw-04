@@ -2,17 +2,18 @@ import ImageCard from '../ImageCard/ImageCard';
 import Loader from '../Loader/Loader';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import LoadMoreBtn from '../LoadMoreBtn/LoadMoreBtn';
+import css from './ImageGallery.module.css'
 
 const ImageGallery = ({ images, isLoading, error, onLoadMore, onImageClick }) => {
   if (error) return <ErrorMessage message={error} />;
   if (isLoading) return <Loader />;
 
   return (
-    <div>
+    <div >
       {images.length > 0 && (
-        <ul>
+        <ul className={css.galleryContainer} >
           {images.map((image) => (
-            <li key={image.id}>
+            <li className={css.galleryItem} key={image.id}>
               <ImageCard image={image} onClick={() => onImageClick(image)} />
             </li>
           ))}

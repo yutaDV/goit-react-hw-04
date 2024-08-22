@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import SearchBar from './components/SearchBar/SearchBar';
 import ImageGallery from './components/ImageGallery/ImageGallery';
-import { fetchImages } from './services/api'; 
+import { fetchImages } from './services/api';
+import css from './App.module.css'; 
 
 Modal.setAppElement('#root'); // Adjust the selector if needed
 
@@ -60,14 +61,14 @@ const App = () => {
   };
 
   return (
-    <div>
+    <div className={css.container}>
       <SearchBar onSubmit={handleSearch} />
       <ImageGallery
         images={images}
         isLoading={isLoading}
         error={error}
         onLoadMore={handleLoadMore}
-        onImageClick={openModal} // Pass the function to ImageGallery
+        onImageClick={openModal} 
       />
        <Modal
         isOpen={isModalOpen}
